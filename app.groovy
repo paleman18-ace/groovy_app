@@ -3,19 +3,21 @@
 @Controller
 class App {
 
-    @RequestMapping("/")
+    @RequestMapping(value="/", method=RequestMethod.GET)
     @ResponseBody
     def home(ModelAndView mav){
         mav.setViewName("home")
+        mav.addObject("msg", "名前書いてください")
         mav
     }
 
-    @RequestMapping("/site")
-    def site(){
-      def header = "<html><body>"
-      def footer = "</body></html>"
-      def content = "<h1>youkoso, site!!</h1><p>nakami</p>"
-      
-      header + footer + content
+    @RequestMapping(value="/send", method=RequestMethod.POST)
+    @ResponseBody
+    def send(@RequestParam("text1")String str, ModelAndView mav) {
+        mav.setViewName("home")
+        mav.addObject("msg", "＋でこれはコントローラからの表示(send)" + str + "!!")
+        mav.addObject("value",str)
+        mav
     }
+
 }
